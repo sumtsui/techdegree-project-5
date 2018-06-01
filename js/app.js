@@ -15,6 +15,7 @@ const data = new Data('https://randomuser.me/api/?results=100');
 // Fetch Employees data: 
 data.fetchData().then(res => {
 
+	// filter non English language employees:
 	employees = res.results.filter(employee => isEnglish(employee.nat));
 	const totalPage = getPageTotal(employees); // total number of pages
 
@@ -102,17 +103,20 @@ function setActiveLink(page) {
 
 // handle search query:
 function search(list) {
-	let result;
 	let query = searchInput.value;
+	let result;
 	let match = [];
 
+	// get search result
 	if (query === "") result = list;
+	else {
+		list.forEach(item => {
+			if (item.name.first.toLowerCase().includes(query.toLowerCase()) || item.name.last.toLowerCase().includes(query.toLowerCase())) match.push(item);
+		});
+		result = (match.length < 1) ? '<h2>No employee match the search term.</h2>' : match;	
+	}
 
-	list.forEach(item => {
-		if (item.name.first.toLowerCase().includes(query.toLowerCase()) || item.name.last.toLowerCase().includes(query.toLowerCase())) match.push(item);
-	});
-	result = (match.length < 1) ? '<h2>No employee match the search term.</h2>' : match;
-
+	// display search result
 	if (Array.isArray(result)) {
 		showEmployees(result, 1);
 		showLinks(getPageTotal(result));
