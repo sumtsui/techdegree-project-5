@@ -2,10 +2,9 @@
 
 const employeesUL = document.querySelector('.employee-list');
 const cardBgDIV = document.querySelector('.detail-card-bg');
+const paginationUL = document.querySelector('.pagination ul');
 const searchForm = document.createElement('form');
-searchForm.className = 'employee-search';
 const searchInput = document.createElement('input');
-searchInput.setAttribute('placeholder', 'Search for employees...');
 
 let employees;
 const employeesPerPage = 12;
@@ -35,7 +34,7 @@ data.fetchData().then(res => {
 	cardBgDIV.addEventListener('click', (event) => infoCard.handleClick(event));
 
 	// click Page Number link:
-	document.querySelector('.pagination ul').addEventListener('click', (event) => {
+	paginationUL.addEventListener('click', (event) => {
 		if (event.target.tagName === "A") {
 			let pageNum = event.target.text;
 			showEmployees(employees, pageNum);
@@ -62,11 +61,8 @@ function showEmployees(list, currentPage) {
 // note: due to Event Delegation, only dynamically generate li items, ul is not dynamically generated. 
 function showLinks(num) {
 	let htmlString = '';
-	for (let i = 1; i <= num; i++) {
-		htmlString += '<li>';
-		htmlString += `<a href="#">${i}</a></li>`;
-	}
-	document.querySelector('.pagination ul').style.display = 'block'; 
+	for (let i = 1; i <= num; i++) htmlString += `<li><a href="#">${i}</a></li>`;
+	show(paginationUL); 
 	print('.pagination ul', htmlString);
 }
 
@@ -100,9 +96,7 @@ function getEmployeeHTML(list) {
 // take current page number, give "active" class to correct link.
 function setActiveLink(page) {
 	let links = document.querySelectorAll('.pagination a');
-	for (let i = 0; i < links.length; i++) {
-		links[i].className = '';
-	}
+	for (let i = 0; i < links.length; i++) links[i].className = '';
 	links[page - 1].className = "active";
 }
 
@@ -114,31 +108,31 @@ function search(list) {
 
 	if (query === "") result = list;
 
-	for (let i = 0; i < list.length; i++) {
-		if (list[i].name.first.toLowerCase().includes(query.toLowerCase()) || list[i].name.last.toLowerCase().includes(query.toLowerCase())) 
-			match.push(list[i]);
-	}	
+	list.forEach(item => {
+		if (item.name.first.toLowerCase().includes(query.toLowerCase()) || item.name.last.toLowerCase().includes(query.toLowerCase())) match.push(item);
+	});
 	result = (match.length < 1) ? '<h2>No employee match the search term.</h2>' : match;
 
 	if (Array.isArray(result)) {
-		let totalPage = getPageTotal(result);
 		showEmployees(result, 1);
-		showLinks(totalPage);
+		showLinks(getPageTotal(result));
 		setActiveLink(1);
 	} else {
 		print('.employee-list', result);
-		document.querySelector('.pagination ul').style.display = 'none';
+		hide(paginationUL);
 	}
 }
 
 function addSearch() {
+	searchForm.className = 'employee-search';
+	searchInput.setAttribute('placeholder', 'Search for employee...');
 	document.querySelector('.page-header').appendChild(searchForm);
 	searchForm.appendChild(searchInput);
 }
 
 // helper functions:
 function print(selector, content) { document.querySelector(selector).innerHTML = content; }
-function show(node, attr) { node.style.display = attr; }
+function show(node) { node.style.display = 'block'; }
 function hide(node) { node.style.display = 'none'; }
 function isEnglish(str) { return ['AU', 'GB', 'IE', 'NZ', 'US'].includes(str); }
 

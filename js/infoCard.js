@@ -1,3 +1,4 @@
+// 'employees' is not encapsulated.
 const infoCard  = {
 
 	currentEmployee: null,
