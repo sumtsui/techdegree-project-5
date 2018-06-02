@@ -22,8 +22,7 @@ const infoCard  = {
 				<p class="address">${employee.location.street} ${employee.location.state} ${employee.location.postcode}</p>
 				<p>Birthday: ${this.reformatDoB(employee.dob)}</p>
 			</div>
-			<button class="enable" id="arrow-right">&gt;</button>;
-		`;
+			<button class="enable" id="arrow-right">&gt;</button>`;
 	},
 
 	handleClick: function(e) {

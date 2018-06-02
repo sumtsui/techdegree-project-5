@@ -20,6 +20,7 @@ data.fetchData().then(res => {
 	const totalPage = getPageTotal(employees); // total number of pages
 
 	// initialize page:
+	hideLoader();
 	showEmployees(employees, 1);
 	showLinks(totalPage);
 	setActiveLink(1);
@@ -132,6 +133,10 @@ function addSearch() {
 	searchInput.setAttribute('placeholder', 'Search for employee...');
 	document.querySelector('.page-header').appendChild(searchForm);
 	searchForm.appendChild(searchInput);
+}
+
+function hideLoader() {
+	hide(document.querySelector('.loader'));
 }
 
 // helper functions:
