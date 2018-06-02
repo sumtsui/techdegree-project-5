@@ -12,6 +12,8 @@ const data = new Data('https://randomuser.me/api/?results=100');
 
 /**************** End Global Variables ****************/
 
+addLoader();
+
 // Fetch Employees data: 
 data.fetchData().then(res => {
 
@@ -20,7 +22,7 @@ data.fetchData().then(res => {
 	const totalPage = getPageTotal(employees); // total number of pages
 
 	// initialize page:
-	hideLoader();
+	removeLoader();
 	showEmployees(employees, 1);
 	showLinks(totalPage);
 	setActiveLink(1);
@@ -135,8 +137,14 @@ function addSearch() {
 	searchForm.appendChild(searchInput);
 }
 
-function hideLoader() {
-	hide(document.querySelector('.loader'));
+function addLoader() {
+	const div = document.createElement('div');
+	div.className = 'loader';
+	document.querySelector('.page').insertBefore(div, employeesUL);
+}
+
+function removeLoader() {
+	document.querySelector('.page').removeChild(document.querySelector('.loader'));
 }
 
 // helper functions:
