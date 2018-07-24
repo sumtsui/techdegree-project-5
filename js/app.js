@@ -22,7 +22,7 @@ data.fetchData().then(res => {
 	const totalPage = getPageTotal(employees); // total number of pages
 
 	// initialize page:
-	removeLoader();
+	// removeLoader();
 	showEmployees(employees, 1);
 	showLinks(totalPage);
 	setActiveLink(1);
