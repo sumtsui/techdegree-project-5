@@ -20,7 +20,7 @@ const infoCard  = {
 				<hr>
 				<p>${employee.phone}</p>
 				<p class="address">${employee.location.street} ${employee.location.state} ${employee.location.postcode}</p>
-				<p>Birthday: ${this.reformatDoB(employee.dob)}</p>
+				<p>Birthday: ${this.reformatDoB(employee.dob.date)}</p>
 			</div>
 			<button class="enable" id="arrow-right">&gt;</button>`;
 	},

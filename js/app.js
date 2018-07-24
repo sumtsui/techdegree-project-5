@@ -19,10 +19,11 @@ data.fetchData().then(res => {
 
 	// filter non English language employees:
 	employees = res.results.filter(employee => isEnglish(employee.nat));
+	console.log(employees);
 	const totalPage = getPageTotal(employees); // total number of pages
 
 	// initialize page:
-	// removeLoader();
+	removeLoader();
 	showEmployees(employees, 1);
 	showLinks(totalPage);
 	setActiveLink(1);
@@ -42,7 +43,7 @@ data.fetchData().then(res => {
 		if (event.target.tagName === "A") {
 			let pageNum = event.target.text;
 			showEmployees(employees, pageNum);
-			setActiveLink(pageNum);		
+			setActiveLink(pageNum);
 		}
 	});
 
