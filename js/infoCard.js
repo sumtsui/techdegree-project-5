@@ -61,7 +61,7 @@ const infoCard  = {
 		return node;
 	},
 
-	reformatDoB: str => str.substr(0, str.indexOf(' ')).replace(/[-]/g, '/'),
+	reformatDoB: str => str.substr(0, 9).replace(/[-]/g, '/'),
 
 	getPreEmployee: () => {
 		const index = (employees.indexOf(currentEmployee));
